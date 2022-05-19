@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package bakins.todo.v1;
+option go_package = "github.com/bakins/twirp-todo-example/internal/proto";
+
+import "google/protobuf/timestamp.proto";
+
+service TodoService {
+  rpc ListTasks(ListTasksRequest) returns (ListTasksResponse);
+  rpc CreateTask(CreateTaskRequest) returns (CreateTaskResponse);
+  rpc GetTask(GetTaskRequest) returns (GetTaskResponse);
+}
+
+message Task {
+  uint64 id = 1;
+  google.protobuf.Timestamp created = 2;
+  string title = 3;
+  string description = 4;
+}
+
+message ListTasksRequest {}
+
+message ListTasksResponse { repeated Task tasks = 1; }
+
+message CreateTaskRequest {
+  string title = 1;
+  string description = 2;
+}
+
+message CreateTaskResponse { Task task = 1; }
+
+message GetTaskRequest { uint64 id = 1; }
+
+message GetTaskResponse { Task task = 1; }
